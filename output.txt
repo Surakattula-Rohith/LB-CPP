@@ -1,8 +1,13 @@
+racecar
+racecar
+
 1
-65
-0
-1
 
 
+243
 
-Executed In: 0 ms
+2 3 5 1 2 
+1 2 2 3 5 
+
+
+Executed In: 4 ms
