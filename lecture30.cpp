@@ -121,7 +121,7 @@ int main(int argc, char const *argv[])
     cout << retMax(a, b) << nl;
     a += 7;
     b += 2;
-    cout << retMax(a, b) << nl  << nl  ;
+    cout << retMax(a, b) << nl << nl  ;
 
     int ak[5] = {2,3,4,5,6} ;
     printA(ak,5);
