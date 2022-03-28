@@ -105,19 +105,28 @@ int sumA(int *arr, int n)
     return arr[0] + sumA(arr + 1, n - 1);
 }
 
-int binSearchA(int arr[],int s ,int e ,int key){
+int binSearchA(int arr[], int s, int e, int key)
+{
 
-    if(s==e){
-        if(arr[s] == key) return true;
-        else return false ;
+    if (s == e)
+    {
+        if (arr[s] == key)
+            return true;
+        else
+            return false;
     }
-    if(s>e) return false ;
-    int m = mid(s,e) ;
-    if(arr[m] == key) return true;
-    else if(arr[m] > key){
-        return binSearchA(arr,s,m-1,key);
-    }else{
-        return binSearchA(arr,m+1,e,key) ;
+    if (s > e)
+        return false;
+    int m = mid(s, e);
+    if (arr[m] == key)
+        return true;
+    else if (arr[m] > key)
+    {
+        return binSearchA(arr, s, m - 1, key);
+    }
+    else
+    {
+        return binSearchA(arr, m + 1, e, key);
     }
 }
 
@@ -134,10 +143,10 @@ int main(int argc, char const *argv[])
         cin >> arr[i];
     }
 
-    cout << isSorted(arr, n) << nl ;
-    cout << sumA(arr, n) << nl ;
+    cout << isSorted(arr, n) << nl;
+    cout << sumA(arr, n) << nl;
     cout << linSearchA(arr, 10, 101) << nl;
-    cout << binSearchA(arr,0,9 ,2) << nl  ;
+    cout << binSearchA(arr, 0, 9, 2) << nl;
 
     cout << nl;
 

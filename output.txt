@@ -1,13 +1,4 @@
-racecar
-racecar
-
-1
+1 1 1 3 4 
 
 
-243
-
-2 3 5 1 2 
-1 2 2 3 5 
-
-
-Executed In: 4 ms
+Executed In: 8 ms
