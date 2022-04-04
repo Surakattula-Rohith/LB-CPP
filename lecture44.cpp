@@ -176,6 +176,160 @@ void deleteAtMiddle(Node *&head, int pos)
     }
 }
 
+class dNode
+{
+public:
+    int data;
+    dNode *prev;
+    dNode *next;
+    dNode(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+        this->prev = NULL;
+    }
+};
+
+void printD(dNode *head)
+{
+    dNode *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << nl;
+}
+
+int getLengthD(dNode* head ){
+    dNode *temp = head;
+    int n = 0 ;
+
+    while (temp != NULL)
+    {
+        n++ ;
+        temp = temp->next;
+    }
+   
+   return n ;
+}
+
+void insertAtHeadD(dNode* &head, int d){
+    dNode *temp = new dNode(d);
+    if(head == NULL) {
+        head = temp ;
+        return;
+    }else{
+        head->prev = temp ;
+        temp->next = head ;
+        head = temp ;
+        return ;
+
+    }
+
+}
+
+void inserAtTailD(dNode* &head, int d){
+    
+    int n = getLengthD(head) ;
+    if(n==0) {
+        insertAtHeadD(head,d);
+        return ;
+    }
+    n-- ;
+    dNode* temp = head ;
+    while(n--){
+        temp = temp->next ;
+    }
+    dNode* h = new dNode(d);
+    h->prev = temp ;
+    temp->next = h ;
+    return ;
+}
+
+void insertAtMiddleD(dNode* &head, int d , int val){
+    if(val == 1){
+        insertAtHeadD(head, d);
+        return ;
+    }else{
+        int n = getLengthD(head);
+        if(val>n){
+            inserAtTailD(head,d);
+            return ;
+        }
+        val = val-2;
+        dNode* temp = head;
+        while(val--){
+        temp = temp->next; 
+        }
+        dNode* h = new dNode(d);
+        dNode* p = temp->next ;
+        temp->next = h ;
+        h->next = p ;
+        p->prev = h ;
+        h->prev = temp ;
+        return ;
+    }
+}
+
+void deleteAtHeadD(dNode* &head){
+    if(head->next == NULL){
+        delete head ;
+        return; 
+    }else{
+        dNode* temp = head->next ;
+        dNode* h = head ;
+        head = temp ;
+        delete h ;
+        return ;
+    }
+}
+
+void deleteAttailD(dNode* &head){
+    int n = getLengthD(head);
+    if(n==1) {
+        deleteAtHeadD(head);
+        return; 
+    }else{
+        dNode* temp = head ;
+        n = n-2 ;
+        while(n--){
+            temp = temp->next ;
+        }
+        dNode* h = temp->next ;
+        temp->next = NULL ;
+        h->prev = NULL ;
+        delete h ;
+        return ;
+    }
+}
+
+
+void deleteAtMiddleD(dNode* &head, int pos){
+    int n = getLengthD(head);
+    if(pos == 1){
+        deleteAtHeadD(head);
+        return ;
+    }
+    else if(pos>=n){
+        deleteAttailD(head);
+        return ;
+    }else{
+        pos = pos-2;
+        dNode* temp = head ;
+        while(pos--){
+            temp = temp->next;
+        }
+        dNode*h = temp->next ;
+        temp->next = h->next ;
+        h->next->prev = temp ;
+        h->next = NULL ;
+        h->prev = NULL ;
+        delete h ;
+        return ;
+    }
+}
+
 int main(int argc, char const *argv[])
 {
     clock_t begin = clock();
@@ -228,12 +382,72 @@ int main(int argc, char const *argv[])
     print(n1);
     deleteAtMiddle(n1, 7);
     print(n1);
-    deleteAtMiddle(n1,7) ;
-    print(n1) ;
-    deleteAtMiddle(n1,14) ;
-    print(n1) ;
+    deleteAtMiddle(n1, 7);
+    print(n1);
+    deleteAtMiddle(n1, 14);
+    print(n1);
+
+    cout << nl;
+    cout << nl;
+
+    dNode *head1 = new dNode(10);
+    printD(head1);
+    cout << getLengthD(head1)  << nl ;
+    cout << nl ;
+
+    insertAtHeadD(head1,20);
+    printD(head1) ;
+    insertAtHeadD(head1,30);
+    printD(head1) ;
 
     cout << nl ;
+
+    inserAtTailD(head1,30);
+    printD(head1) ;
+    inserAtTailD(head1,50);
+    printD(head1) ;
+
+    cout << nl ;
+
+    insertAtMiddleD(head1,5,3);
+    printD(head1) ;
+    insertAtMiddleD(head1,15,1);
+    printD(head1) ;
+    insertAtMiddleD(head1,4,7);
+    printD(head1) ;
+    insertAtMiddleD(head1,60,9);
+    printD(head1) ;
+    insertAtMiddleD(head1,99,15);
+    printD(head1) ;
+
+    cout << nl ;
+
+    deleteAtHeadD(head1) ;
+    printD(head1) ;
+    deleteAtHeadD(head1) ;
+    printD(head1) ;
+
+    cout << nl ;
+
+    deleteAttailD(head1);
+    printD(head1) ;
+    deleteAttailD(head1);
+    printD(head1) ;
+
+    cout << nl ;
+    
+    deleteAtMiddleD(head1,1);
+    printD(head1);
+    deleteAtMiddleD(head1,5);
+    printD(head1);
+    deleteAtMiddleD(head1,8);
+    printD(head1);
+    deleteAtMiddleD(head1,2);
+    printD(head1);
+    
+
+
+
 
 
 #ifndef ONLINE_JUDGE
