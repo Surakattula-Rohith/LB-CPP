@@ -188,7 +188,7 @@ void solve(stack<int> &s, int x)
     int n = s.top();
     s.pop();
 
-    pushAtBottom(s, x);
+    // pushAtBottom(s, x);
     s.push(n);
 }
 
@@ -198,15 +198,146 @@ stack<int> pushAtBottom(stack<int> &s, int x)
     return s;
 }
 
-void reverseStack(stack<int> &s) {
-    if(s.empty()){
-		return ;
-	}
-	int n = s.top() ;
-	s.pop() ;
-	
-	reverseStack(s) ;
-	pushAtBottom(s,n) ;
+void reverseStack(stack<int> &s)
+{
+    if (s.empty())
+    {
+        return;
+    }
+    int n = s.top();
+    s.pop();
+
+    reverseStack(s);
+    pushAtBottom(s, n);
+}
+
+void sortedInsert(stack<int> &s, int num)
+{
+    if (s.empty() or (!s.empty() and s.top() < num))
+    {
+        s.push(num);
+        return;
+    }
+    int n = s.top();
+    s.pop();
+
+    sortedInsert(s, num);
+
+    s.push(n);
+}
+
+void sortStack(stack<int> &s)
+{
+    if (s.empty())
+        return;
+
+    int num = s.top();
+    s.pop();
+    sortStack(s);
+
+    sortedInsert(s, num);
+}
+
+#include <stack>
+bool findRedundantBrackets(string &s)
+{
+    stack<char> st;
+    int n = s.size();
+    for (int i = 0; i < n; i++)
+    {
+        if ((s[i] == '(') or (s[i] == '+') or (s[i] == '-') or (s[i] == '*') or (s[i] == '/'))
+        {
+            st.push(s[i]);
+        }
+        else
+        {
+            if (s[i] == ')')
+            {
+                bool ans = true;
+                while (st.top() != '(')
+                {
+                    char ch = st.top();
+                    if ((ch == '+') or (ch == '-') or (ch == '*') or (ch == '/'))
+                    {
+                        ans = false;
+                    }
+                    st.pop();
+                }
+                if (ans)
+                {
+                    return true;
+                }
+                st.pop();
+            }
+        }
+    }
+    return false;
+}
+
+void print(stack<char> s)
+{
+    string ans = "";
+    while (!s.empty())
+    {
+        ans += s.top();
+        s.pop();
+    }
+    reverse(ans.begin(), ans.end());
+
+    cout << ans << nl;
+}
+
+int findMinimumCost(string str)
+{
+    int n = str.size();
+    if (n & 1)
+        return -1;
+
+    stack<char> s;
+    for (int i = 0; i < n; i++)
+    {
+        if (str[i] == '{')
+            s.push(str[i]);
+        else
+        {
+            if (!s.empty() and s.top() == '{')
+                s.pop();
+            else
+                s.push(str[i]);
+        }
+    }
+
+    // print(s) ;
+
+    int l = 0, r = 0;
+    while (!s.empty())
+    {
+        if (s.top() == '{')
+            l++;
+        else
+            r++;
+        s.pop();
+    }
+
+    // cout << nl << l << " " << r << nl ;
+    int ans = 0;
+    while (true)
+    {
+        if (l == 0 or l == 1)
+            break;
+        l = l - 2;
+        ans = ans + 1;
+    }
+    if (l & 1)
+    {
+        ans += 2 * l + (r - l) / 2;
+    }
+    else
+    {
+        ans += r / 2;
+    } 
+
+    return ans;
 }
 
 int main(int argc, char const *argv[])
@@ -219,7 +350,7 @@ int main(int argc, char const *argv[])
     {
         string s;
         cin >> s;
-        cout << isValidParenthesis(s) << nl;
+        cout << findMinimumCost(s) << nl;
     }
 
 #ifndef ONLINE_JUDGE
